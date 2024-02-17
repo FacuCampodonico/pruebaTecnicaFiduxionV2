@@ -6,13 +6,13 @@ import { api } from "facuCampodonico/trpc/react";
 
 interface Post{
     id: number;
-    name: string | null; // Hacer name opcional
+    name: string;
     createdById: string;
     createdAt: Date;
     updatedAt?: string;
-  }
+}
   
-async function List({ post }: { post: Post }) {
+function List({ post }: { post: Post }) {
 
     const router = useRouter();
 
