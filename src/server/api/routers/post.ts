@@ -28,16 +28,6 @@ export const postRouter = createTRPCRouter({
       });
     }),
 
-    delete: protectedProcedure
-    .input(z.number())
-    .mutation(async ({ctx, input}) => {
-      // simulate a slow db call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      const postId = input
-      //await ctx.db.delete(tareas).values(tareaABorrar)
-      await ctx.db.delete(posts).where(eq(posts.id, postId))
-    }),
-
   getLatest: publicProcedure.query(({ ctx }) => {
     return ctx.db.query.posts.findFirst({
       orderBy: (posts, { desc }) => [desc(posts.createdAt)],
@@ -53,5 +43,21 @@ export const postRouter = createTRPCRouter({
     return allPosts;
   }),
 
-  
+  delete: protectedProcedure
+  .input(z.number())
+  .mutation(async ({ctx, input}) => {
+    // simulate a slow db call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const postId = input
+    //await ctx.db.delete(tareas).values(tareaABorrar)
+    await ctx.db.delete(posts).where(eq(posts.id, postId))
+  }),
+
+  edit: protectedProcedure
+  .input(z.object({ id: z.number(), name: z.string().min(1) }))
+  .mutation(async ({ ctx, input }) => {
+    await ctx.db.update(posts).set({ name: input.name }).where(eq(posts.id, input.id));
+    // Lógica para editar la tarea con el ID proporcionado
+  }),
+
 });
