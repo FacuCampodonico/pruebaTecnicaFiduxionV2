@@ -1,5 +1,5 @@
 import { z } from "zod";
-
+import { eq } from "drizzle-orm";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -28,6 +28,16 @@ export const postRouter = createTRPCRouter({
       });
     }),
 
+    delete: protectedProcedure
+    .input(z.number())
+    .mutation(async ({ctx, input}) => {
+      // simulate a slow db call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const postId = input
+      //await ctx.db.delete(tareas).values(tareaABorrar)
+      await ctx.db.delete(posts).where(eq(posts.id, postId))
+    }),
+
   getLatest: publicProcedure.query(({ ctx }) => {
     return ctx.db.query.posts.findFirst({
       orderBy: (posts, { desc }) => [desc(posts.createdAt)],
@@ -42,4 +52,6 @@ export const postRouter = createTRPCRouter({
     const allPosts = await ctx.db.query.posts.findMany(); // Consulta para obtener todas las publicaciones
     return allPosts;
   }),
+
+  
 });

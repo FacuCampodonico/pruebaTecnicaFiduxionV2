@@ -27,7 +27,7 @@ export function CreatePost() {
     >
       <input
       type="text"
-      placeholder="Title"
+      placeholder="Tarea"
       value={name}
       onChange={(e) => setName(e.target.value)}
       className="rounded-full px-4 py-2 text-black border border-black/10 transition-colors duration-300 focus:border-black/20 hover:border-black/20"
