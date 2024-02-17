@@ -40,7 +40,7 @@ export default async function Home() {
             {posts.length > 0 ? (
               posts.map((post, index) => <List post={post} key={index} />)
             ) : (
-              <p>Nada por aqui...</p>
+              <p>Aun no has subido ninguna tarea...</p>
             )}
           </div>
         </div>
