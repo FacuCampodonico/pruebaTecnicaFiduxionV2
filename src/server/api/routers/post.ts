@@ -57,7 +57,6 @@ export const postRouter = createTRPCRouter({
   .input(z.object({ id: z.number(), name: z.string().min(1) }))
   .mutation(async ({ ctx, input }) => {
     await ctx.db.update(posts).set({ name: input.name }).where(eq(posts.id, input.id));
-    // Lógica para editar la tarea con el ID proporcionado
   }),
 
 });

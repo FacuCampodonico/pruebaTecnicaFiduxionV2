@@ -54,8 +54,8 @@ async function CrudShowcase() {
 
   return(
     <div>
-    <div className="w-full flex justify-center">
-          <div className="w-3/4 tabla">
+        <div className="w-full flex justify-center mb-10">
+          <div className="w-full tabla">
             {posts.length > 0 ? (
               posts.map((post, index) => <List post={post} key={index} />)
             ) : (
