@@ -10,12 +10,6 @@ export default async function Home() {
   noStore();
   const hello = await api.post.hello.query({ text: "from tRPC" });
   const session = await getServerAuthSession();
-
-
-
-  const userId = session.user.id;
-  const postss = await api.post.getAllPosts.query();
-  const posts = postss.filter(post => post.createdById === userId);
   
   //const latestPost  = await api.post.getLatest.query();
 
@@ -41,7 +35,26 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="w-full flex justify-center">
+        <CrudShowcase/>
+
+      </div>
+    </main>
+  );
+}
+
+async function CrudShowcase() {
+
+  const session = await getServerAuthSession();
+
+  if (!session?.user) return null;
+
+  const userId = session.user.id;
+  const postss = await api.post.getAllPosts.query();
+  const posts = postss.filter(post => post.createdById === userId);
+
+  return(
+    <div>
+    <div className="w-full flex justify-center">
           <div className="w-3/4 tabla">
             {posts.length > 0 ? (
               posts.map((post, index) => <List post={post} key={index} />)
@@ -54,10 +67,8 @@ export default async function Home() {
         <div>
           <CreatePost />
         </div>
-      </div>
-    </main>
+  </div>
   );
 }
-
 
 
