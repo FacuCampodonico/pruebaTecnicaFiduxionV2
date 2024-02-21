@@ -6,11 +6,11 @@ import { api } from "facuCampodonico/trpc/react";
 
 interface Post{
     id: number;
-    name: string;
+    name: string | null; // Hacer name opcional
     createdById: string;
     createdAt: Date;
     updatedAt?: string;
-}
+  }
   
 function List({ post }: { post: Post }) {
 

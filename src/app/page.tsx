@@ -10,7 +10,13 @@ export default async function Home() {
   noStore();
   const hello = await api.post.hello.query({ text: "from tRPC" });
   const session = await getServerAuthSession();
-  const posts = await api.post.getAllPosts.query();
+
+
+
+  const userId = session.user.id;
+  const postss = await api.post.getAllPosts.query();
+  const posts = postss.filter(post => post.createdById === userId);
+  
   //const latestPost  = await api.post.getLatest.query();
 
   return (
